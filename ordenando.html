@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordenação de Vetores</title>
+    <link rel="stylesheet" href="global.css">
+    <script src="ordenando.js"></script>
+</head>
+<body>
+    <h1>Ordenação de Vetores</h1>
+    <input type="number" id="valor" placeholder="Digite um valor">
+    <button onclick="add()">Adicionar</button>
+    <br><br>
+    <select id="algoritmo">
+        <option value="bubble_sort">Bubble Sort</option>
+        <option value="selection_sort">Selection Sort</option>
+        <option value="quick_sort">Quick Sort</option>
+    </select>
+    <button onclick="ordenar()">Ordenar</button>
+    <button onclick="misturar()">Misturar</button>
+    <br><br>
+    <ul id="valores"></ul>
+
+    <script>
+        function add() {
+            const valorInput = document.getElementById('valor');
+            const lista = document.getElementById('valores');
+            const node = document.createElement('li');
+            const textNode = document.createTextNode(valorInput.value);
+            node.appendChild(textNode);
+            lista.appendChild(node);
+            valorInput.value = '';
+        }
+
+        function ordenar() {
+            const lista = document.getElementById('valores');
+            const algoritmo = document.getElementById('algoritmo').value;
+            const valores = Array.from(lista.children).map(li => parseInt(li.innerHTML));
+            
+            switch (algoritmo) {
+                case 'bubble_sort':
+                    bubble_sort(valores);
+                    break;
+                case 'selection_sort':
+                    selection_sort(valores);
+                    break;
+                case 'quick_sort':
+                    quick_sort(valores, 0, valores.length - 1);
+                    break;
+            }
+
+            lista.innerHTML = '';
+            valores.forEach(valor => {
+                const node = document.createElement('li');
+                const textNode = document.createTextNode(valor);
+                node.appendChild(textNode);
+                lista.appendChild(node);
+            });
+        }
+
+        function misturar() {
+            const lista = document.getElementById('valores');
+            const valores = Array.from(lista.children).map(li => parseInt(li.innerHTML));
+            shuffle(valores, valores.length * 2);
+
+            lista.innerHTML = '';
+            valores.forEach(valor => {
+                const node = document.createElement('li');
+                const textNode = document.createTextNode(valor);
+                node.appendChild(textNode);
+                lista.appendChild(node);
+            });
+        }
+    </script>
+</body>
+</html>
